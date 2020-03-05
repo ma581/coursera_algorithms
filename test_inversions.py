@@ -13,31 +13,31 @@ def count_inversions(input):
     else:
         left = input[0:length // 2]
         right = input[length // 2: length]
-        sorted, split_count = count_split_inversions(input, 0)
+        sorted, split_count = enhanced_merge_sort(left, right, 0)
         return count_inversions(left) + count_inversions(right) + split_count
 
 
-def count_split_inversions(input, count):
-    print(f'sorting  {input}')
-    length = len(input)
-    if length == 2:
-        if input[0] <= input[1]:
-            return input, 0
+def enhanced_merge_sort(a, b, count):
+    print(f'sorting  {a}, {b}')
+    length = len(a)
+    if length == 1:
+        if a[0] <= b[0]:
+            return [a.pop(), b.pop()], 0
         else:
-            return [input[1], input[0]], 0
+            return [b.pop(), a.pop()], 0
     else:
-        left = input[0:length // 2]
-        right = input[length // 2: length]
-        left_sorted, left_count = count_split_inversions(left, count)
-        right_sorted, right_count = count_split_inversions(right, count)
+        a_l = a[0:length//2]
+        a_r = a[length//2: length]
 
-        merged, split_count = merge(left_sorted, right_sorted)
-        print(f'merged: {merged}, split_count: {split_count}, left_count: {left_count}, right_count: {right_count}')
-        return merged, split_count + left_count + right_count
+        b_l = b[0:length//2]
+        b_r = b[length//2: length]
+
+        sorted_a, count_a = enhanced_merge_sort(a_l, a_r, 0)
+        sorted_b, count_b = enhanced_merge_sort(b_l, b_r, 0)
+        return merge(sorted_a, sorted_b, count_a + count_b)
 
 
-def merge(l, r):
-    count = 0
+def merge(l, r, count):
     print(f'merging l: {l} and r:{r}')
     length_of_merged = len(l) * 2
     merged = [None] * length_of_merged
@@ -60,32 +60,47 @@ def merge(l, r):
             break
     return merged, count
 
-
-def test_should_find_one_inversion():
-    input = [1, 2, 4, 3]  # 1 inversion
-    assert count_inversions(input) == 1
-
-
-def test_should_find_two_inversion():
-    input = [3, 2, 4, 1]  # 3 inversion
-    assert count_inversions(input) == 3
-
-
-def test_should_find_split_inversion():
-    input = [1, 4, 2, 3]  # 1 split inversion
-    assert count_inversions(input) == 2
-
-
-# def test_should_find_split_inversions():
-#     input = [ 2, 4, 1, 3, 5, 6 ,7 ,8]  # 1 split inversion
-#     assert count_inversions(input) == 3
-
 def test_should_sort_list():
-    input = [1, 2, 4, 3]
-    sorted, inversions = count_split_inversions(input, 0)
+    sorted, inversions = enhanced_merge_sort([1, 2,],[ 4, 3], 0)
     assert sorted == [1, 2, 3, 4]
 
 def test_should_sort_larger_list():
-    input = [1, 2, 4, 3, 8, 7, 9, 6]
-    sorted, inversions = count_split_inversions(input, 0)
+    sorted, inversions = enhanced_merge_sort([1, 2, 4, 3, ],[8, 7, 9, 6], 0)
     assert sorted == [1, 2, 3, 4, 6, 7, 8 ,9]
+
+
+
+def test_should_find_one_inversion():
+    input = [1, 2, 4, 3]
+    assert count_inversions(input) == 1
+
+
+def test_should_find_three_inversion():
+    input = [3, 2, 4, 1]
+    assert count_inversions(input) == 3
+
+
+def test_should_find_two_split_inversions():
+    input = [1, 4, 2, 3]
+    assert count_inversions(input) == 2
+
+
+def test_should_find_three_split_inversions():
+    input = [ 2, 4, 1, 3, 5, 6 ,7 ,8]
+    assert count_inversions(input) == 3
+
+def test_should_find_0_inversions():
+    input = [ 1, 2, 3, 4, 5, 6, 7, 8]
+    assert count_inversions(input) == 0
+
+def test_should_find_1_inversion():
+    input = [ 1, 2, 3, 4, 5, 6, 8, 7]
+    assert count_inversions(input) == 1
+
+def test_should_find_1_split_inversion():
+    input = [ 1, 2, 3, 5, 4, 6, 7, 9]
+    assert count_inversions(input) == 1
+
+def test_should_find_4_split_inversions():
+    input = [ 1, 2, 5, 6, 3, 4, 7, 9]
+    assert count_inversions(input) == 4
