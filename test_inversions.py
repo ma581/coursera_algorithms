@@ -26,11 +26,11 @@ def enhanced_merge_sort(a, b, count):
         else:
             return [b.pop(), a.pop()], 0
     else:
-        a_l = a[0:length//2]
-        a_r = a[length//2: length]
+        a_l = a[0:length // 2]
+        a_r = a[length // 2: length]
 
-        b_l = b[0:length//2]
-        b_r = b[length//2: length]
+        b_l = b[0:length // 2]
+        b_r = b[length // 2: length]
 
         sorted_a, count_a = enhanced_merge_sort(a_l, a_r, 0)
         sorted_b, count_b = enhanced_merge_sort(b_l, b_r, 0)
@@ -60,14 +60,15 @@ def merge(l, r, count):
             break
     return merged, count
 
+
 def test_should_sort_list():
-    sorted, inversions = enhanced_merge_sort([1, 2,],[ 4, 3], 0)
+    sorted, inversions = enhanced_merge_sort([1, 2, ], [4, 3], 0)
     assert sorted == [1, 2, 3, 4]
 
-def test_should_sort_larger_list():
-    sorted, inversions = enhanced_merge_sort([1, 2, 4, 3, ],[8, 7, 9, 6], 0)
-    assert sorted == [1, 2, 3, 4, 6, 7, 8 ,9]
 
+def test_should_sort_larger_list():
+    sorted, inversions = enhanced_merge_sort([1, 2, 4, 3, ], [8, 7, 9, 6], 0)
+    assert sorted == [1, 2, 3, 4, 6, 7, 8, 9]
 
 
 def test_should_find_one_inversion():
@@ -86,21 +87,25 @@ def test_should_find_two_split_inversions():
 
 
 def test_should_find_three_split_inversions():
-    input = [ 2, 4, 1, 3, 5, 6 ,7 ,8]
+    input = [2, 4, 1, 3, 5, 6, 7, 8]
     assert count_inversions(input) == 3
 
+
 def test_should_find_0_inversions():
-    input = [ 1, 2, 3, 4, 5, 6, 7, 8]
+    input = [1, 2, 3, 4, 5, 6, 7, 8]
     assert count_inversions(input) == 0
 
+
 def test_should_find_1_inversion():
-    input = [ 1, 2, 3, 4, 5, 6, 8, 7]
+    input = [1, 2, 3, 4, 5, 6, 8, 7]
     assert count_inversions(input) == 1
+
 
 def test_should_find_1_split_inversion():
-    input = [ 1, 2, 3, 5, 4, 6, 7, 9]
+    input = [1, 2, 3, 5, 4, 6, 7, 9]
     assert count_inversions(input) == 1
 
+
 def test_should_find_4_split_inversions():
-    input = [ 1, 2, 5, 6, 3, 4, 7, 9]
+    input = [1, 2, 5, 6, 3, 4, 7, 9]
     assert count_inversions(input) == 4
