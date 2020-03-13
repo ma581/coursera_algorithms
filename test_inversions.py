@@ -14,8 +14,7 @@ def count_inversions(input):
         half_way = math.floor(length // 2)
         sorted_left, left_inversions = count_inversions(input[0:half_way])
         sorted_right, right_inversions = count_inversions(input[half_way:length])
-        joined = sorted_left + sorted_right
-        sorted, split = split_inversions(joined)
+        sorted, split = split_inversions(sorted_left + sorted_right)
         return sorted, left_inversions + right_inversions + split
 
 
@@ -130,7 +129,6 @@ def test_should_find_17_inversions():
     input = [1, 5, 4, 8, 10, 2, 6, 9, 3, 7]
     sorted, inversions = count_inversions(input)
     assert inversions == 17
-
 
 # f = open('IntegerArray.txt', 'r')
 # array_of_strings = f.read().splitlines()
