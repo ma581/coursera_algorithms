@@ -1,6 +1,14 @@
 import math
 
 
+# f = open('IntegerArray.txt', 'r')
+# array_of_strings = f.read().splitlines()
+# f.close()
+# input_array = list(map(lambda x: int(x), array_of_strings))
+# print(f'Input array: {len(input_array)}')
+# sorted, inversions = count_inversions(input_array)
+# print(f'Total: {inversions}')
+
 def count_inversions(input):
     length = len(input)
     if length == 2:
@@ -129,11 +137,3 @@ def test_should_find_17_inversions():
     input = [1, 5, 4, 8, 10, 2, 6, 9, 3, 7]
     sorted, inversions = count_inversions(input)
     assert inversions == 17
-
-# f = open('IntegerArray.txt', 'r')
-# array_of_strings = f.read().splitlines()
-# f.close()
-# input_array = list(map(lambda x: int(x), array_of_strings))
-# print(f'Input array: {len(input_array)}')
-# sorted, inversions = count_inversions(input_array)
-# print(f'Total: {inversions}')
