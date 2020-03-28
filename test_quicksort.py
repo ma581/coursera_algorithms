@@ -48,34 +48,34 @@ def swap(input, i, j):
 
 def test_should_sort_simplest():
     input = [5, 3]
-    expected = ([3, 5], 1)
     count = quicksort(input)
-    assert (input, count) == expected
+    assert input == [3, 5]
+    assert count == 1
 
 
 def test_should_sort_sorted():
     input = [3, 5]
-    expected = ([3, 5], 1)
     count = quicksort(input)
-    assert (input, count) == expected
+    assert input == [3, 5]
+    assert count == 1
 
 
 def test_should_sort_array_of_size_three():
     input = [5, 6, 3]
-    expected = ([3, 5, 6], 2)
     count = quicksort(input)
-    assert (input, count) == expected
+    assert input == [3, 5, 6]
+    assert count == 2
 
 
 def test_should_sort_array_of_size_three_again():
     input = [3, 5, 6]
-    expected = ([3, 5, 6], 3)
     count = quicksort(input)
-    assert (input, count) == expected
+    assert input == [3, 5, 6]
+    assert count == 3
 
 
 def test_should_sort_with_pivot_largest():
     input = [3, 2, 1]
-    expected = ([1, 2, 3], 3)
     count = quicksort(input)
-    assert (input, count) == expected
+    assert input == [1, 2, 3]
+    assert count == 3
