@@ -48,7 +48,7 @@ def choose_last_value(input):
 def choose_median_of_three(input):
     first = input[0]
     last = input[len(input) - 1]
-    middle = input[(len(input) - 1) % 2]
+    middle = input[(len(input) // 2) - 1]
 
     median = get_median(first, middle, last)
     return input.index(median), median
@@ -56,9 +56,9 @@ def choose_median_of_three(input):
 
 def get_median(first, middle, last):
     # print(f'Calculating median of {first}, {middle}, {last}')
-    if last >= middle >= first:
+    if last > middle > first or first > middle > last:
         return middle
-    elif last >= first >= middle:
+    elif last > first > middle or middle > first > last:
         return first
     else:
         return last
@@ -85,11 +85,11 @@ def test_should_sort_simplest():
     assert count == 1
 
 
-# def test_should_sort_array_of_size_three():
-#     input = [5, 6, 3]
-#     sorted, count = quicksort(input, choose_first_value)
-#     assert sorted == [3, 5, 6]
-#     assert count == 2
+def test_should_sort_array_of_size_three():
+    input = [5, 6, 3]
+    sorted, count = quicksort(input, choose_first_value)
+    assert sorted == [3, 5, 6]
+    assert count == 2
 
 
 def test_should_sort_array_of_size_three_again():
@@ -112,15 +112,36 @@ def test_should_sort_large_array():
     assert sorted == [1, 2, 5, 6]
     assert count == 4
 
-# f = open('QuickSort.txt', 'r')
-# array_of_strings = f.read().splitlines()
-# f.close()
-# input_array = list(map(lambda x: int(x), array_of_strings))
-#
+def test_should_pick_median_of_even_size_array():
+    input = [8, 2, 4, 5, 7, 1]
+    pivot_index, pivot_value = choose_median_of_three(input)
+    assert pivot_value == 4
+    assert pivot_index == 2
+
+
+def test_should_pick_median_of_odd_size_array():
+    input = [8, 2, 4]
+    pivot_index, pivot_value = choose_median_of_three(input)
+    assert pivot_value == 4
+    assert pivot_index == 2
+
+
+def test_should_pick_median_of_another_even_size_array():
+    input = [4, 5, 6, 7]
+    pivot_index, pivot_value = choose_median_of_three(input)
+    assert pivot_value == 5
+    assert pivot_index == 1
+
+
+f = open('QuickSort.txt', 'r')
+array_of_strings = f.read().splitlines()
+f.close()
+input_array = list(map(lambda x: int(x), array_of_strings))
+
 # sorted_first, count_for_first = quicksort(input_array, choose_first_value)
 # sorted_second, count_for_last = quicksort(input_array, choose_last_value)
-# sorted_third, count_for_median = quicksort(input_array, choose_median_of_three)
+sorted_third, count_for_median = quicksort(input_array, choose_median_of_three)
 
 # print(count_for_first)
 # print(count_for_last)
-# print(count_for_median)
+print(count_for_median)
