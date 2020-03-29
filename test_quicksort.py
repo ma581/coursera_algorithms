@@ -1,5 +1,5 @@
 def quicksort(input, choose_pivot):
-    # print(f'QuickSorting {input} *************')
+    print(f'QuickSorting {input} *************')
     if len(input) <= 1:
         return input, 0
     else:
@@ -48,7 +48,10 @@ def choose_last_value(input):
 def choose_median_of_three(input):
     first = input[0]
     last = input[len(input) - 1]
-    middle = input[(len(input) // 2) - 1]
+    if len(input) % 2 == 0:
+        middle = input[(len(input) // 2) - 1]
+    else:
+        middle = input[len(input) // 2]
 
     median = get_median(first, middle, last)
     return input.index(median), median
@@ -101,7 +104,7 @@ def test_should_sort_array_of_size_three_again():
 
 def test_should_sort_with_pivot_largest():
     input = [3, 2, 1]
-    sorted, count = quicksort(input, choose_median_of_three)
+    sorted, count = quicksort(input, choose_first_value)
     assert sorted == [1, 2, 3]
     assert count == 3
 
@@ -111,6 +114,7 @@ def test_should_sort_large_array():
     sorted, count = quicksort(input, choose_median_of_three)
     assert sorted == [1, 2, 5, 6]
     assert count == 4
+
 
 def test_should_pick_median_of_even_size_array():
     input = [8, 2, 4, 5, 7, 1]
@@ -126,11 +130,25 @@ def test_should_pick_median_of_odd_size_array():
     assert pivot_index == 2
 
 
+def test_should_pick_median_of_array_of_five():
+    input = [1, 2, 3, 4, 5]
+    pivot_index, pivot_value = choose_median_of_three(input)
+    assert pivot_value == 3
+    assert pivot_index == 2
+
+
 def test_should_pick_median_of_another_even_size_array():
     input = [4, 5, 6, 7]
     pivot_index, pivot_value = choose_median_of_three(input)
     assert pivot_value == 5
     assert pivot_index == 1
+
+
+def test_should():
+    input = [2, 20, 1, 15, 3, 11, 13, 6, 16, 10, 19, 5, 4, 9, 8, 14, 18, 17, 7, 12]
+    sorted, count = quicksort(input, choose_median_of_three)
+    assert sorted == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    assert count == 55
 
 
 f = open('QuickSort.txt', 'r')
@@ -145,3 +163,17 @@ sorted_third, count_for_median = quicksort(input_array, choose_median_of_three)
 # print(count_for_first)
 # print(count_for_last)
 print(count_for_median)
+
+# 197670
+# 230801
+# 173214
+#
+#
+# 162085 -
+# 164123 -
+# 148240 x
+#
+#
+# 162085 -
+# 164123 -
+# 137270 x
