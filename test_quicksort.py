@@ -1,5 +1,5 @@
 def quicksort(input, choose_pivot):
-    print(f'QuickSorting {input} *************')
+    # print(f'QuickSorting {input} *************')
     if len(input) <= 1:
         return input, 0
     else:
@@ -156,24 +156,10 @@ array_of_strings = f.read().splitlines()
 f.close()
 input_array = list(map(lambda x: int(x), array_of_strings))
 
-# sorted_first, count_for_first = quicksort(input_array, choose_first_value)
-# sorted_second, count_for_last = quicksort(input_array, choose_last_value)
+sorted_first, count_for_first = quicksort(input_array, choose_first_value)
+sorted_second, count_for_last = quicksort(input_array, choose_last_value)
 sorted_third, count_for_median = quicksort(input_array, choose_median_of_three)
 
-# print(count_for_first)
-# print(count_for_last)
+print(count_for_first)
+print(count_for_last)
 print(count_for_median)
-
-# 197670
-# 230801
-# 173214
-#
-#
-# 162085 -
-# 164123 -
-# 148240 x
-#
-#
-# 162085 -
-# 164123 -
-# 137270 x
