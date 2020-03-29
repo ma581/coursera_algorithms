@@ -1,9 +1,10 @@
-def quicksort(input):
+def quicksort(input, choose_pivot):
     print(f'QuickSorting {input} *************')
     if len(input) <= 1:
         return input, 0
     else:
         pivot_index, pivot_value = choose_pivot(input)
+        print(f'Chosen pivot={pivot_value}')
         partitioned, count = partition(input, pivot_index, pivot_value)
 
         if len(input) > 2:
@@ -11,8 +12,8 @@ def quicksort(input):
             left = partitioned[0: max(new_pivot_index, 1)]
             right = partitioned[max(new_pivot_index, 1):]
 
-            sorted_left, count_left = quicksort(left)
-            sorted_right, count_right = quicksort(right)
+            sorted_left, count_left = quicksort(left, choose_pivot)
+            sorted_right, count_right = quicksort(right, choose_pivot)
             return sorted_left + sorted_right, count + count_left + count_right
         else:
             return partitioned, count
@@ -35,9 +36,33 @@ def partition(_input, pivot_index, pivot_value):
         return input, len(input) - 1
 
 
-def choose_pivot(input):
+def choose_first_value(input):
     print(f'Choosing pivot for {input} to be {input[0]}')
     return 0, input[0]
+
+
+def choose_last_value(input):
+    print(f'Choosing pivot for {input} to be {input[len(input) - 1]}')
+    return len(input) - 1, input[len(input) - 1]
+
+
+def choose_median_of_three(input):
+    first = input[0]
+    last = input[len(input) - 1]
+    middle = input[(len(input) - 1) % 2]
+
+    median = get_median(first, middle, last)
+    return input.index(median), median
+
+
+def get_median(first, middle, last):
+    print(f'Calculating median of {first}, {middle}, {last}')
+    if last >= middle >= first:
+        return middle
+    elif last >= first >= middle:
+        return first
+    else:
+        return last
 
 
 def swap(input, i, j):
@@ -49,41 +74,41 @@ def swap(input, i, j):
 
 def test_should_sort_sorted():
     input = [3, 5]
-    sorted, count = quicksort(input)
+    sorted, count = quicksort(input, choose_first_value)
     assert sorted == [3, 5]
     assert count == 1
 
 
 def test_should_sort_simplest():
     input = [5, 3]
-    sorted, count = quicksort(input)
+    sorted, count = quicksort(input, choose_first_value)
     assert sorted == [3, 5]
     assert count == 1
 
 
 def test_should_sort_array_of_size_three():
     input = [5, 6, 3]
-    sorted, count = quicksort(input)
+    sorted, count = quicksort(input, choose_first_value)
     assert sorted == [3, 5, 6]
     assert count == 3
 
 
 def test_should_sort_array_of_size_three_again():
     input = [3, 5, 6]
-    sorted, count = quicksort(input)
+    sorted, count = quicksort(input, choose_first_value)
     assert sorted == [3, 5, 6]
     assert count == 3
 
 
 def test_should_sort_with_pivot_largest():
     input = [3, 2, 1]
-    sorted, count = quicksort(input)
+    sorted, count = quicksort(input, choose_median_of_three)
     assert sorted == [1, 2, 3]
     assert count == 3
 
 
 def test_should_sort_large_array():
     input = [5, 1, 2, 6]
-    sorted, count = quicksort(input)
+    sorted, count = quicksort(input, choose_median_of_three)
     assert sorted == [1, 2, 5, 6]
     assert count == 5
