@@ -1,20 +1,20 @@
 def quicksort(input, choose_pivot):
-    print(f'QuickSorting {input} *************')
+    # print(f'QuickSorting {input} *************')
     if len(input) <= 1:
         return input, 0
     else:
         pivot_index, pivot_value = choose_pivot(input)
-        print(f'Chosen pivot={pivot_value}')
+        # print(f'Chosen pivot={pivot_value}')
         partitioned, count = partition(input, pivot_index, pivot_value)
 
         if len(input) > 2:
             new_pivot_index = partitioned.index(pivot_value)
-            left = partitioned[0: max(new_pivot_index, 1)]
-            right = partitioned[max(new_pivot_index, 1):]
+            left = partitioned[0: new_pivot_index]
+            right = partitioned[new_pivot_index + 1:]
 
             sorted_left, count_left = quicksort(left, choose_pivot)
             sorted_right, count_right = quicksort(right, choose_pivot)
-            return sorted_left + sorted_right, count + count_left + count_right
+            return sorted_left + [pivot_value] + sorted_right, count + count_left + count_right
         else:
             return partitioned, count
 
@@ -30,19 +30,18 @@ def partition(_input, pivot_index, pivot_value):
             if input[j] < pivot_value:
                 swap(input, l, j)
                 l += 1
-        # if i > 1:
         swap(input, 0, l - 1)
-        print(f'Partition result: {input}')
+        # print(f'Partition result: {input}')
         return input, len(input) - 1
 
 
 def choose_first_value(input):
-    print(f'Choosing pivot for {input} to be {input[0]}')
+    # print(f'Choosing pivot for {input} to be {input[0]}')
     return 0, input[0]
 
 
 def choose_last_value(input):
-    print(f'Choosing pivot for {input} to be {input[len(input) - 1]}')
+    # print(f'Choosing pivot for {input} to be {input[len(input) - 1]}')
     return len(input) - 1, input[len(input) - 1]
 
 
@@ -56,7 +55,7 @@ def choose_median_of_three(input):
 
 
 def get_median(first, middle, last):
-    print(f'Calculating median of {first}, {middle}, {last}')
+    # print(f'Calculating median of {first}, {middle}, {last}')
     if last >= middle >= first:
         return middle
     elif last >= first >= middle:
@@ -66,7 +65,7 @@ def get_median(first, middle, last):
 
 
 def swap(input, i, j):
-    print(f'{input} Swapping {input[i]}, {input[j]}')
+    # print(f'{input} Swapping {input[i]}, {input[j]}')
     temp = input[i]
     input[i] = input[j]
     input[j] = temp
@@ -86,11 +85,11 @@ def test_should_sort_simplest():
     assert count == 1
 
 
-def test_should_sort_array_of_size_three():
-    input = [5, 6, 3]
-    sorted, count = quicksort(input, choose_first_value)
-    assert sorted == [3, 5, 6]
-    assert count == 3
+# def test_should_sort_array_of_size_three():
+#     input = [5, 6, 3]
+#     sorted, count = quicksort(input, choose_first_value)
+#     assert sorted == [3, 5, 6]
+#     assert count == 2
 
 
 def test_should_sort_array_of_size_three_again():
@@ -111,4 +110,17 @@ def test_should_sort_large_array():
     input = [5, 1, 2, 6]
     sorted, count = quicksort(input, choose_median_of_three)
     assert sorted == [1, 2, 5, 6]
-    assert count == 5
+    assert count == 4
+
+# f = open('QuickSort.txt', 'r')
+# array_of_strings = f.read().splitlines()
+# f.close()
+# input_array = list(map(lambda x: int(x), array_of_strings))
+#
+# sorted_first, count_for_first = quicksort(input_array, choose_first_value)
+# sorted_second, count_for_last = quicksort(input_array, choose_last_value)
+# sorted_third, count_for_median = quicksort(input_array, choose_median_of_three)
+
+# print(count_for_first)
+# print(count_for_last)
+# print(count_for_median)
