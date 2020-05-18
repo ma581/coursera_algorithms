@@ -65,8 +65,8 @@ def bus_scenario():
 
 def train_platform(label="TRAIN SCENARIO"):
     for i in range(1, 7):
-        five_android = random.sample(list(android), k=5)
-        five_ios = random.sample(list(ios), k=5)
+        five_android = random.sample(android, k=5)
+        five_ios = random.sample(ios, k=5)
         options = five_android + five_ios
 
         stationary = random.sample(options, k=5)
@@ -81,8 +81,8 @@ def train_platform(label="TRAIN SCENARIO"):
 
 def bar_scenario():
     for i in range(1, 7):
-        eight_android = random.sample(list(android), k=8)
-        seven_ios = random.sample(list(ios), k=7)
+        eight_android = random.sample(android, k=8)
+        seven_ios = random.sample(ios, k=7)
         print("BAR SCENARIO ---------------------")
         print(f"Run {i}")
         print(f"Walking {eight_android + seven_ios}")
@@ -97,12 +97,20 @@ def grid():
     for i in range(1, 7):
         k_android = 13 if random.choice([True, False]) else 12
         k_ios = 25 - k_android
-        a = random.sample(list(android), k=k_android)
-        b = random.sample(list(ios), k=k_ios)
+        a = random.sample(android, k=k_android)
+        b = random.sample(ios, k=k_ios)
         print("GRID SCENARIO ---------------------")
         print(f'Android={k_android}, iOS={k_ios}')
         print(f"Run {i}")
-        print(f"{random.sample(a+b, k=25)}")
+        print(f"{random.sample(a + b, k=25)}")
+        print("")
+
+
+def park():
+    for i in range(1, 7):
+        print("Park SCENARIO ---------------------")
+        print(f"Run {i}")
+        print(f"{random.sample(all, k=2)}")
         print("")
 
 
@@ -112,3 +120,4 @@ if __name__ == '__main__':
     # bar_scenario()
     # supermarket()
     grid()
+    # park()
